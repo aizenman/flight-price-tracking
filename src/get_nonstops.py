@@ -228,7 +228,7 @@ def run_search(origin: str, destination: str, days_ahead: int,
     return round_trips_to_dataframe(pairs, lookup_time)
 
 
-BACKOFF_SECONDS = [2, 4, 8, 16, 32, 64, 128]
+BACKOFF_SECONDS = [2, 4, 8, 16, 32, 64, 128, 256, 512]
 
 
 def run_search_with_backoff(origin: str, destination: str, days_ahead: int,
