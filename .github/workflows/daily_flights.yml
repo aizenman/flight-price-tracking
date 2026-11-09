@@ -25,7 +25,7 @@ jobs:
       - name: Run searches
         run: |
           mkdir -p output
-          python src/get_nonstops.py --file searches.xlsx --out-dir output \
+          python src/get_nonstops.py --file config/searches.xlsx --out-dir output \
             | tee "output/log_$(date -u +%Y%m%d).txt"
 
       - name: Commit results to the repo
