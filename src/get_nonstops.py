@@ -18,6 +18,7 @@ Requires: pip install flights pandas openpyxl (pyarrow too, for --out-dir)
 import argparse
 import os
 import sys
+import time
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -227,6 +228,42 @@ def run_search(origin: str, destination: str, days_ahead: int,
     return round_trips_to_dataframe(pairs, lookup_time)
 
 
+BACKOFF_SECONDS = [2, 4, 8, 16, 32, 64, 128]
+
+
+def run_search_with_backoff(origin: str, destination: str, days_ahead: int,
+                            return_days: int | None = None) -> pd.DataFrame:
+    """Run a search, retrying with exponential backoff on empty results or exceptions.
+
+    Makes one attempt, then one more after each wait in BACKOFF_SECONDS.
+    Returns the first non-empty DataFrame. If every attempt is empty, returns
+    the last (empty) DataFrame. If the final attempt raised, re-raises that error.
+    SystemExit (bad input such as an unknown airport code) is not retried.
+    """
+    df = None
+    last_error = None
+    for wait in [0] + BACKOFF_SECONDS:
+        if wait:
+            print(f"  retrying in {wait}s...")
+            time.sleep(wait)
+        try:
+            df = run_search(origin, destination, days_ahead, return_days)
+            last_error = None
+        except SystemExit:
+            raise
+        except Exception as e:
+            print(f"  attempt failed: {e or repr(e)}")
+            df = None
+            last_error = e
+            continue
+        if not df.empty:
+            return df
+        print("  no results")
+    if last_error is not None:
+        raise last_error
+    return df
+
+
 def is_blank(value) -> bool:
     return value is None or pd.isna(value) or str(value).strip() == ""
 
@@ -279,7 +316,8 @@ def main() -> None:
             label += f", return day {s['return_days']}"
 
         try:
-            df = run_search(s["origin"], s["destination"], s["days_ahead"], s["return_days"])
+            df = run_search_with_backoff(s["origin"], s["destination"],
+                                         s["days_ahead"], s["return_days"])
         except (SystemExit, Exception) as e:  # bad input exits via sys.exit; keep going
             print(f"{label}: ERROR: {e or repr(e)}\n")
             continue
@@ -296,6 +334,10 @@ def main() -> None:
             path = os.path.join(args.out_dir, f"{route}_{stamp}_{suffix}.parquet")
             df.to_parquet(path, index=False)  # requires pyarrow
             print(f"Saved {path}\n")
+
+        if df.empty and args.file:
+            print("Still empty after all retries; stopping spreadsheet processing.")
+            break
 
 
 if __name__ == "__main__":
