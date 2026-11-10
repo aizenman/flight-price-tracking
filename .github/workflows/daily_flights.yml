@@ -4,13 +4,13 @@ on:
   schedule:
     - cron: "0 6 * * *"    # 1:00 AM New York (EST) -> nyc_tor
     - cron: "0 14 * * *"   # 9:00 AM New York (EST) -> nyc_lon
-    - cron: "0 20 * * *"   # 3:00 PM New York (EST) -> nyc_pmo
+    - cron: "0 20 * * *"   # 3:00 PM New York (EST) -> nyc_ath
   workflow_dispatch:
     inputs:
       run:
         description: "Which search to run (used only for manual runs)"
         type: choice
-        options: [nyc_tor, nyc_lon, nyc_pmo]
+        options: [nyc_tor, nyc_lon, nyc_ath]
         required: true
 
 permissions:
@@ -43,7 +43,7 @@ jobs:
           case "$SCHEDULE" in
             "0 6 * * *")  NAME=nyc_tor ;;
             "0 14 * * *") NAME=nyc_lon ;;
-            "0 20 * * *") NAME=nyc_pmo ;;
+            "0 20 * * *") NAME=nyc_ath ;;
             *)            NAME="$MANUAL" ;;
           esac
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
