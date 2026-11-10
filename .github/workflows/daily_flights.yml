@@ -2,11 +2,23 @@ name: Daily nonstop flight search
 
 on:
   schedule:
-    - cron: "0 13 * * *"   # 13:00 UTC daily (8:00 AM New York in winter, 9:00 AM in summer)
+    - cron: "0 6 * * *"    # 1:00 AM New York (EST) -> nyc_tor
+    - cron: "0 14 * * *"   # 9:00 AM New York (EST) -> nyc_lon
+    - cron: "0 20 * * *"   # 3:00 PM New York (EST) -> nyc_pmo
   workflow_dispatch:
+    inputs:
+      run:
+        description: "Which search to run (used only for manual runs)"
+        type: choice
+        options: [nyc_tor, nyc_lon, nyc_pmo]
+        required: true
 
 permissions:
   contents: write   # needed to commit results back to the repo
+
+concurrency:
+  group: flight-search
+  cancel-in-progress: false   # let runs queue instead of cancelling each other
 
 jobs:
   search:
@@ -22,13 +34,31 @@ jobs:
       - name: Install dependencies
         run: pip install flights pandas openpyxl pyarrow
 
+      - name: Pick the search for this run
+        id: pick
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          MANUAL: ${{ github.event.inputs.run }}
+        run: |
+          case "$SCHEDULE" in
+            "0 6 * * *")  NAME=nyc_tor ;;
+            "0 14 * * *") NAME=nyc_lon ;;
+            "0 20 * * *") NAME=nyc_pmo ;;
+            *)            NAME="$MANUAL" ;;
+          esac
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
       - name: Run searches
         run: |
-          mkdir -p output
-          python src/get_nonstops.py --file config/searches.xlsx --out-dir output \
-            | tee "output/log_$(date -u +%Y%m%d).txt"
+          NAME="${{ steps.pick.outputs.name }}"
+          OUT="output/$NAME"
+          mkdir -p "$OUT"
+          python src/get_nonstops.py --file "config/$NAME.xlsx" --out-dir "$OUT" \
+            | tee "$OUT/log_$(date -u +%Y%m%d).txt"
 
       - name: Commit results to the repo
+        env:
+          NAME: ${{ steps.pick.outputs.name }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -36,7 +66,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No new results to commit."
           else
-            git commit -m "Flight results for $(date -u +%Y-%m-%d)"
+            git commit -m "Flight results ($NAME) for $(date -u +%Y-%m-%d)"
             git pull --rebase
             git push
           fi
