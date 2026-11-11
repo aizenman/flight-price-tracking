@@ -12,6 +12,9 @@ Usage:
 
 Spreadsheet columns: origin, destination, days_ahead, return_days (blank = one-way).
 
+The script stops itself after 45 minutes. The limit is checked between searches
+and before each retry, so a search that is already in progress finishes first.
+
 Requires: pip install flights pandas openpyxl (pyarrow too, for --out-dir)
 """
 
@@ -37,6 +40,35 @@ from fli.models import (
 from fli.search import SearchFlights
 
 LOCAL_TZ = ZoneInfo("America/New_York")
+
+MAX_RUNTIME_SECONDS = 45 * 60
+START_DATETIME = None      # wall-clock start, for display
+START_MONOTONIC = None     # monotonic start, for measuring elapsed time
+
+
+class RuntimeLimitExceeded(Exception):
+    """Raised when the script has used up its time budget."""
+
+
+def start_clock() -> None:
+    """Record the start time. Call once, at the top of main()."""
+    global START_DATETIME, START_MONOTONIC
+    START_DATETIME = datetime.now(LOCAL_TZ)
+    START_MONOTONIC = time.monotonic()
+    print_with_timestamp(f"Started at {START_DATETIME:%Y-%m-%d %I:%M:%S %p %Z}; "
+                         f"limit is {MAX_RUNTIME_SECONDS // 60} minutes.")
+
+
+def time_left() -> float:
+    """Seconds remaining before the runtime limit."""
+    return MAX_RUNTIME_SECONDS - (time.monotonic() - START_MONOTONIC)
+
+
+def check_time_limit() -> None:
+    """Raise RuntimeLimitExceeded if the time budget is used up."""
+    if time_left() <= 0:
+        raise RuntimeLimitExceeded(
+            f"{MAX_RUNTIME_SECONDS // 60}-minute runtime limit reached")
 
 
 def print_with_timestamp(*args, **kwargs) -> None:
@@ -245,17 +277,22 @@ def run_search_with_backoff(origin: str, destination: str, days_ahead: int,
     Returns the first non-empty DataFrame. If every attempt is empty, returns
     the last (empty) DataFrame. If the final attempt raised, re-raises that error.
     SystemExit (bad input such as an unknown airport code) is not retried.
+    RuntimeLimitExceeded is not retried either; it is passed up to main().
+    Waits are shortened so they never run past the runtime limit.
     """
     df = None
     last_error = None
     for wait in [0] + BACKOFF_SECONDS:
+        check_time_limit()
         if wait:
-            print_with_timestamp(f"  retrying in {wait}s...")
+            wait = min(wait, max(time_left(), 0))
+            print_with_timestamp(f"  retrying in {wait:.0f}s...")
             time.sleep(wait)
+            check_time_limit()
         try:
             df = run_search(origin, destination, days_ahead, return_days)
             last_error = None
-        except SystemExit:
+        except (SystemExit, RuntimeLimitExceeded):
             raise
         except Exception as e:
             print_with_timestamp(f"  attempt failed: {e or repr(e)}")
@@ -276,7 +313,9 @@ def is_blank(value) -> bool:
 
 def read_searches(path: str) -> list[dict]:
     """Read searches from the first sheet of an .xlsx file. Blank return_days means one-way."""
-    df = pd.read_excel(path, engine="openpyxl").dropna(how="all")
+    # The with-block closes the workbook file as soon as the rows are read.
+    with pd.ExcelFile(path, engine="openpyxl") as xls:
+        df = pd.read_excel(xls, sheet_name=0).dropna(how="all")
     searches = []
     for _, row in df.iterrows():
         searches.append({
@@ -288,7 +327,39 @@ def read_searches(path: str) -> list[dict]:
     return searches
 
 
-def main() -> None:
+def run_all(searches: list[dict], out_dir: str | None) -> None:
+    """Run each search in turn, stopping cleanly when the time limit is reached."""
+    for s in searches:
+        label = f"{s['origin']} -> {s['destination']}, day {s['days_ahead']}"
+        if s["return_days"] is not None:
+            label += f", return day {s['return_days']}"
+
+        try:
+            check_time_limit()
+            df = run_search_with_backoff(s["origin"], s["destination"],
+                                         s["days_ahead"], s["return_days"])
+        except RuntimeLimitExceeded as e:
+            print_with_timestamp(f"{label}: stopped: {e}. Remaining searches were skipped.\n")
+            return
+        except (SystemExit, Exception) as e:  # bad input exits via sys.exit; keep going
+            print_with_timestamp(f"{label}: ERROR: {e or repr(e)}\n")
+            continue
+
+        print_with_timestamp(f"== {label} ({len(df)} rows) ==")
+        print(df)
+        print()
+
+        if out_dir:
+            stamp = datetime.now(LOCAL_TZ).strftime("%Y%m%dT%H%M%S")
+            route = f"{s['origin']}_{s['destination']}".replace(",", "-").upper()
+            suffix = f"d{s['days_ahead']}" + (
+                f"_r{s['return_days']}" if s["return_days"] is not None else "")
+            path = os.path.join(out_dir, f"{route}_{stamp}_{suffix}.parquet")
+            df.to_parquet(path, index=False)  # requires pyarrow; the file is closed on return
+            print_with_timestamp(f"Saved {path}\n")
+
+
+def main() -> int:
     parser = argparse.ArgumentParser(description="List nonstop flights on a date.")
     parser.add_argument("origin", nargs="?", help="Departure airport IATA code or city, e.g. JFK, NYC")
     parser.add_argument("destination", nargs="?", help="Arrival airport IATA code or city, e.g. LAX, LON")
@@ -301,47 +372,39 @@ def main() -> None:
     parser.add_argument("--out-dir", help="Also save each result as a Parquet file in this folder")
     args = parser.parse_args()
 
-    if args.file:
-        searches = read_searches(args.file)
-    else:
-        if args.origin is None or args.destination is None or args.days_ahead is None:
-            parser.error("give origin, destination and days_ahead, or use --file")
-        searches = [{
-            "origin": args.origin,
-            "destination": args.destination,
-            "days_ahead": args.days_ahead,
-            "return_days": args.return_days,
-        }]
-
-    if args.out_dir:
-        os.makedirs(args.out_dir, exist_ok=True)
-
-    for s in searches:
-        label = f"{s['origin']} -> {s['destination']}, day {s['days_ahead']}"
-        if s["return_days"] is not None:
-            label += f", return day {s['return_days']}"
-
-        try:
-            df = run_search_with_backoff(s["origin"], s["destination"],
-                                         s["days_ahead"], s["return_days"])
-        except (SystemExit, Exception) as e:  # bad input exits via sys.exit; keep going
-            print_with_timestamp(f"{label}: ERROR: {e or repr(e)}\n")
-            continue
-
-        print_with_timestamp(f"== {label} ({len(df)} rows) ==")
-        print(df)
-        print()
+    start_clock()
+    exit_code = 0
+    try:
+        if args.file:
+            searches = read_searches(args.file)
+        else:
+            if args.origin is None or args.destination is None or args.days_ahead is None:
+                parser.error("give origin, destination and days_ahead, or use --file")
+            searches = [{
+                "origin": args.origin,
+                "destination": args.destination,
+                "days_ahead": args.days_ahead,
+                "return_days": args.return_days,
+            }]
 
         if args.out_dir:
-            stamp = datetime.now(LOCAL_TZ).strftime("%Y%m%dT%H%M%S")
-            route = f"{s['origin']}_{s['destination']}".replace(",", "-").upper()
-            suffix = f"d{s['days_ahead']}" + (
-                f"_r{s['return_days']}" if s["return_days"] is not None else "")
-            path = os.path.join(args.out_dir, f"{route}_{stamp}_{suffix}.parquet")
-            df.to_parquet(path, index=False)  # requires pyarrow
-            print_with_timestamp(f"Saved {path}\n")
+            os.makedirs(args.out_dir, exist_ok=True)
 
+        run_all(searches, args.out_dir)
+    except KeyboardInterrupt:
+        print_with_timestamp("Interrupted by user. Exiting.")
+        exit_code = 130
+    except Exception as e:
+        print_with_timestamp(f"Fatal error: {e or repr(e)}")
+        exit_code = 1
+    finally:
+        # Every file in this script is opened inside a with-block or by pandas,
+        # which closes it before returning, so nothing is left open here.
+        elapsed = time.monotonic() - START_MONOTONIC
+        print_with_timestamp(f"Finished after {elapsed / 60:.1f} minutes. "
+                             f"All files closed. Exit code {exit_code}.")
+    return exit_code
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
