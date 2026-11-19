@@ -1,0 +1,293 @@
+[2026-11-19 22:02:29.299257] Started at 2026-11-19 05:02:29 PM EST; limit is 45 minutes.
+[2026-11-19 22:02:29.589805]   no results
+[2026-11-19 22:02:29.589834]   retrying in 2s...
+[2026-11-19 22:02:31.675551]   no results
+[2026-11-19 22:02:31.675583]   retrying in 4s...
+[2026-11-19 22:02:35.751287]   no results
+[2026-11-19 22:02:35.751318]   retrying in 8s...
+[2026-11-19 22:02:43.829438]   no results
+[2026-11-19 22:02:43.829470]   retrying in 16s...
+[2026-11-19 22:03:11.798232] == NYC -> LHR, day 1, return day 15 (42 rows) ==
+                        lookup_time  ...  total_price
+0  2026-11-19 17:02:59.829683-05:00  ...        882.0
+1  2026-11-19 17:02:59.829683-05:00  ...        882.0
+2  2026-11-19 17:02:59.829683-05:00  ...        882.0
+3  2026-11-19 17:02:59.829683-05:00  ...        882.0
+4  2026-11-19 17:02:59.829683-05:00  ...        882.0
+5  2026-11-19 17:02:59.829683-05:00  ...        882.0
+6  2026-11-19 17:02:59.829683-05:00  ...       1480.0
+7  2026-11-19 17:02:59.829683-05:00  ...       1480.0
+8  2026-11-19 17:02:59.829683-05:00  ...       1480.0
+9  2026-11-19 17:02:59.829683-05:00  ...       1480.0
+10 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+11 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+12 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+13 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+14 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+15 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+16 2026-11-19 17:02:59.829683-05:00  ...       1480.0
+17 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+18 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+19 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+20 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+21 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+22 2026-11-19 17:02:59.829683-05:00  ...       1949.0
+23 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+24 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+25 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+26 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+27 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+28 2026-11-19 17:02:59.829683-05:00  ...       2091.0
+29 2026-11-19 17:02:59.829683-05:00  ...       2682.0
+30 2026-11-19 17:02:59.829683-05:00  ...       2682.0
+31 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+32 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+33 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+34 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+35 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+36 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+37 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+38 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+39 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+40 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+41 2026-11-19 17:02:59.829683-05:00  ...       3121.0
+
+[42 rows x 20 columns]
+
+[2026-11-19 22:03:11.809801] Saved output/nyc_lon/NYC_LHR_20261119T170311_d1_r15.parquet
+
+[2026-11-19 22:03:11.893109]   no results
+[2026-11-19 22:03:11.893139]   retrying in 2s...
+[2026-11-19 22:03:13.962750]   no results
+[2026-11-19 22:03:13.962783]   retrying in 4s...
+[2026-11-19 22:03:18.041178]   no results
+[2026-11-19 22:03:18.041210]   retrying in 8s...
+[2026-11-19 22:03:26.114560]   no results
+[2026-11-19 22:03:26.114594]   retrying in 16s...
+[2026-11-19 22:03:42.194172]   no results
+[2026-11-19 22:03:42.194205]   retrying in 32s...
+[2026-11-19 22:04:14.288590]   no results
+[2026-11-19 22:04:14.288624]   retrying in 64s...
+[2026-11-19 22:05:18.376610]   no results
+[2026-11-19 22:05:18.376642]   retrying in 128s...
+[2026-11-19 22:07:26.649647]   no results
+[2026-11-19 22:07:26.649751] == NYC -> LHR, day 2, return day 16 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:07:26.651770] Saved output/nyc_lon/NYC_LHR_20261119T170726_d2_r16.parquet
+
+[2026-11-19 22:07:26.738656]   no results
+[2026-11-19 22:07:26.738701]   retrying in 2s...
+[2026-11-19 22:07:28.834219]   no results
+[2026-11-19 22:07:28.834251]   retrying in 4s...
+[2026-11-19 22:07:32.914095]   no results
+[2026-11-19 22:07:32.914125]   retrying in 8s...
+[2026-11-19 22:07:41.203750]   no results
+[2026-11-19 22:07:41.203782]   retrying in 16s...
+[2026-11-19 22:07:57.288867]   no results
+[2026-11-19 22:07:57.288899]   retrying in 32s...
+[2026-11-19 22:08:29.543828]   no results
+[2026-11-19 22:08:29.543860]   retrying in 64s...
+[2026-11-19 22:09:33.617482]   no results
+[2026-11-19 22:09:33.617513]   retrying in 128s...
+[2026-11-19 22:11:41.715883]   no results
+[2026-11-19 22:11:41.715918] == NYC -> LHR, day 3, return day 17 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:11:41.717840] Saved output/nyc_lon/NYC_LHR_20261119T171141_d3_r17.parquet
+
+[2026-11-19 22:11:41.780127]   no results
+[2026-11-19 22:11:41.780159]   retrying in 2s...
+[2026-11-19 22:11:43.844132]   no results
+[2026-11-19 22:11:43.844163]   retrying in 4s...
+[2026-11-19 22:11:47.924482]   no results
+[2026-11-19 22:11:47.924516]   retrying in 8s...
+[2026-11-19 22:11:56.042381]   no results
+[2026-11-19 22:11:56.042417]   retrying in 16s...
+[2026-11-19 22:12:12.109359]   no results
+[2026-11-19 22:12:12.109391]   retrying in 32s...
+[2026-11-19 22:12:44.176062]   no results
+[2026-11-19 22:12:44.176094]   retrying in 64s...
+[2026-11-19 22:13:48.247101]   no results
+[2026-11-19 22:13:48.247133]   retrying in 128s...
+[2026-11-19 22:15:56.427670]   no results
+[2026-11-19 22:15:56.427720] == NYC -> LHR, day 4, return day 18 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:15:56.429594] Saved output/nyc_lon/NYC_LHR_20261119T171556_d4_r18.parquet
+
+[2026-11-19 22:15:56.500880]   no results
+[2026-11-19 22:15:56.500910]   retrying in 2s...
+[2026-11-19 22:15:58.559540]   no results
+[2026-11-19 22:15:58.559573]   retrying in 4s...
+[2026-11-19 22:16:02.633447]   no results
+[2026-11-19 22:16:02.633480]   retrying in 8s...
+[2026-11-19 22:16:10.715116]   no results
+[2026-11-19 22:16:10.715150]   retrying in 16s...
+[2026-11-19 22:16:26.789833]   no results
+[2026-11-19 22:16:26.789864]   retrying in 32s...
+[2026-11-19 22:16:58.861824]   no results
+[2026-11-19 22:16:58.861856]   retrying in 64s...
+[2026-11-19 22:18:02.918793]   no results
+[2026-11-19 22:18:02.918823]   retrying in 128s...
+[2026-11-19 22:20:11.044888]   no results
+[2026-11-19 22:20:11.044925] == NYC -> LHR, day 5, return day 19 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:20:11.047856] Saved output/nyc_lon/NYC_LHR_20261119T172011_d5_r19.parquet
+
+[2026-11-19 22:20:11.111843]   no results
+[2026-11-19 22:20:11.111867]   retrying in 2s...
+[2026-11-19 22:20:13.181569]   no results
+[2026-11-19 22:20:13.181598]   retrying in 4s...
+[2026-11-19 22:20:17.241136]   no results
+[2026-11-19 22:20:17.241168]   retrying in 8s...
+[2026-11-19 22:20:25.311547]   no results
+[2026-11-19 22:20:25.311577]   retrying in 16s...
+[2026-11-19 22:20:41.382513]   no results
+[2026-11-19 22:20:41.382544]   retrying in 32s...
+[2026-11-19 22:21:13.447960]   no results
+[2026-11-19 22:21:13.448026]   retrying in 64s...
+[2026-11-19 22:22:17.523461]   no results
+[2026-11-19 22:22:17.523491]   retrying in 128s...
+[2026-11-19 22:24:25.638473]   no results
+[2026-11-19 22:24:25.638511] == NYC -> LHR, day 6, return day 20 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:24:25.640440] Saved output/nyc_lon/NYC_LHR_20261119T172425_d6_r20.parquet
+
+[2026-11-19 22:24:25.711302]   no results
+[2026-11-19 22:24:25.711331]   retrying in 2s...
+[2026-11-19 22:24:27.771489]   no results
+[2026-11-19 22:24:27.771519]   retrying in 4s...
+[2026-11-19 22:24:31.838410]   no results
+[2026-11-19 22:24:31.838440]   retrying in 8s...
+[2026-11-19 22:24:39.917951]   no results
+[2026-11-19 22:24:39.917981]   retrying in 16s...
+[2026-11-19 22:24:55.989244]   no results
+[2026-11-19 22:24:55.989272]   retrying in 32s...
+[2026-11-19 22:25:28.047650]   no results
+[2026-11-19 22:25:28.047683]   retrying in 64s...
+[2026-11-19 22:26:32.118712]   no results
+[2026-11-19 22:26:32.118742]   retrying in 128s...
+[2026-11-19 22:28:40.245155]   no results
+[2026-11-19 22:28:40.245191] == NYC -> LHR, day 7, return day 21 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:28:40.246985] Saved output/nyc_lon/NYC_LHR_20261119T172840_d7_r21.parquet
+
+[2026-11-19 22:28:40.316367]   no results
+[2026-11-19 22:28:40.316400]   retrying in 2s...
+[2026-11-19 22:28:42.374079]   no results
+[2026-11-19 22:28:42.374109]   retrying in 4s...
+[2026-11-19 22:28:46.439808]   no results
+[2026-11-19 22:28:46.439837]   retrying in 8s...
+[2026-11-19 22:28:54.513160]   no results
+[2026-11-19 22:28:54.513192]   retrying in 16s...
+[2026-11-19 22:29:10.588359]   no results
+[2026-11-19 22:29:10.588389]   retrying in 32s...
+[2026-11-19 22:29:42.668993]   no results
+[2026-11-19 22:29:42.669023]   retrying in 64s...
+[2026-11-19 22:30:46.742364]   no results
+[2026-11-19 22:30:46.742395]   retrying in 128s...
+[2026-11-19 22:32:54.854631]   no results
+[2026-11-19 22:32:54.854669] == NYC -> LHR, day 8, return day 22 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:32:54.856551] Saved output/nyc_lon/NYC_LHR_20261119T173254_d8_r22.parquet
+
+[2026-11-19 22:32:54.912976]   no results
+[2026-11-19 22:32:54.913004]   retrying in 2s...
+[2026-11-19 22:32:56.979511]   no results
+[2026-11-19 22:32:56.979542]   retrying in 4s...
+[2026-11-19 22:33:01.056802]   no results
+[2026-11-19 22:33:01.056833]   retrying in 8s...
+[2026-11-19 22:33:09.127926]   no results
+[2026-11-19 22:33:09.127957]   retrying in 16s...
+[2026-11-19 22:33:25.209392]   no results
+[2026-11-19 22:33:25.209423]   retrying in 32s...
+[2026-11-19 22:33:57.279360]   no results
+[2026-11-19 22:33:57.279389]   retrying in 64s...
+[2026-11-19 22:35:01.348650]   no results
+[2026-11-19 22:35:01.348672]   retrying in 128s...
+[2026-11-19 22:37:09.461284]   no results
+[2026-11-19 22:37:09.461322] == NYC -> LHR, day 9, return day 23 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:37:09.463102] Saved output/nyc_lon/NYC_LHR_20261119T173709_d9_r23.parquet
+
+[2026-11-19 22:37:09.530569]   no results
+[2026-11-19 22:37:09.530595]   retrying in 2s...
+[2026-11-19 22:37:11.594237]   no results
+[2026-11-19 22:37:11.594267]   retrying in 4s...
+[2026-11-19 22:37:15.663197]   no results
+[2026-11-19 22:37:15.663226]   retrying in 8s...
+[2026-11-19 22:37:23.731836]   no results
+[2026-11-19 22:37:23.731863]   retrying in 16s...
+[2026-11-19 22:37:39.803508]   no results
+[2026-11-19 22:37:39.803538]   retrying in 32s...
+[2026-11-19 22:38:11.880758]   no results
+[2026-11-19 22:38:11.880787]   retrying in 64s...
+[2026-11-19 22:39:15.951203]   no results
+[2026-11-19 22:39:15.951233]   retrying in 128s...
+[2026-11-19 22:41:24.134997]   no results
+[2026-11-19 22:41:24.135031] == NYC -> LHR, day 10, return day 24 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:41:24.136982] Saved output/nyc_lon/NYC_LHR_20261119T174124_d10_r24.parquet
+
+[2026-11-19 22:41:24.225455]   no results
+[2026-11-19 22:41:24.225481]   retrying in 2s...
+[2026-11-19 22:41:26.304822]   no results
+[2026-11-19 22:41:26.304851]   retrying in 4s...
+[2026-11-19 22:41:30.390910]   no results
+[2026-11-19 22:41:30.390938]   retrying in 8s...
+[2026-11-19 22:41:38.466823]   no results
+[2026-11-19 22:41:38.466844]   retrying in 16s...
+[2026-11-19 22:41:54.541657]   no results
+[2026-11-19 22:41:54.541701]   retrying in 32s...
+[2026-11-19 22:42:26.606451]   no results
+[2026-11-19 22:42:26.606480]   retrying in 64s...
+[2026-11-19 22:43:30.688342]   no results
+[2026-11-19 22:43:30.688371]   retrying in 128s...
+[2026-11-19 22:45:38.856717]   no results
+[2026-11-19 22:45:38.856745] == NYC -> LHR, day 11, return day 25 (0 rows) ==
+Empty DataFrame
+Columns: [lookup_time, out_airline, out_flight, out_from, out_to, out_departure_time, out_departure_date, out_days_from_now, out_aircraft, out_duration_minutes, ret_airline, ret_flight, ret_from, ret_to, ret_departure_time, ret_departure_date, ret_days_from_now, ret_aircraft, ret_duration_minutes, total_price]
+Index: []
+
+[2026-11-19 22:45:38.858417] Saved output/nyc_lon/NYC_LHR_20261119T174538_d11_r25.parquet
+
+[2026-11-19 22:45:38.922097]   no results
+[2026-11-19 22:45:38.922111]   retrying in 2s...
+[2026-11-19 22:45:41.006174]   no results
+[2026-11-19 22:45:41.006195]   retrying in 4s...
+[2026-11-19 22:45:45.090199]   no results
+[2026-11-19 22:45:45.090224]   retrying in 8s...
+[2026-11-19 22:45:53.159890]   no results
+[2026-11-19 22:45:53.159921]   retrying in 16s...
+[2026-11-19 22:46:09.219108]   no results
+[2026-11-19 22:46:09.219136]   retrying in 32s...
+[2026-11-19 22:46:41.309265]   no results
+[2026-11-19 22:46:41.309293]   retrying in 48s...
+[2026-11-19 22:47:29.299383] NYC -> LHR, day 12, return day 26: stopped: 45-minute runtime limit reached. Remaining searches were skipped.
+
+[2026-11-19 22:47:29.299489] Finished after 45.0 minutes. All files closed. Exit code 0.
