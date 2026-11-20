@@ -3,8 +3,8 @@ name: Daily nonstop flight search
 on:
   schedule:
     - cron: "0 6 * * *"    # 1:00 AM New York (EST) -> nyc_tor
-    - cron: "0 14 * * *"   # 9:00 AM New York (EST) -> nyc_lon
-    - cron: "0 20 * * *"   # 3:00 PM New York (EST) -> nyc_ath
+#    - cron: "0 14 * * *"   # 9:00 AM New York (EST) -> nyc_lon
+#    - cron: "0 20 * * *"   # 3:00 PM New York (EST) -> nyc_ath
   workflow_dispatch:
     inputs:
       run:
